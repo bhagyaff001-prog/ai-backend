@@ -1,5 +1,4 @@
 import express from "express";
-import fetch from "node-fetch";
 
 const app = express();
 app.use(express.json());
@@ -38,13 +37,16 @@ app.post("/chat", async (req, res) => {
     const data = await response.json();
 
     const reply =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "No response from AI";
 
     res.json({ reply });
 
   } catch (error) {
-    res.status(500).json({ error: "Something went wrong", details: error.message });
+    res.status(500).json({
+      error: "Something went wrong",
+      details: error.message
+    });
   }
 });
 
