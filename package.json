@@ -1,13 +1,18 @@
 {
   "name": "ai-backend",
   "version": "1.0.0",
+  "description": "AI backend using Node.js and Gemini API",
   "type": "module",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
-    "express": "^4.18.2",
-    "node-fetch": "^3.3.2"
+    "express": "^4.19.2",
+    "@google/generative-ai": "^0.17.0",
+    "cors": "^2.8.5"
   }
 }
