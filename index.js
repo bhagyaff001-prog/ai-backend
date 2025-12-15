@@ -1,16 +1,23 @@
 import express from "express";
+import cors from "cors";
+import fetch from "node-fetch";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
+const PORT = process.env.PORT || 10000;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-// health check
+/* ✅ Health check */
 app.get("/", (req, res) => {
-  res.send("AI Backend is running 🚀");
+  res.json({
+    status: "AI Backend is running 🚀",
+    time: new Date().toISOString()
+  });
 });
 
-// chat endpoint
+/* ✅ AI Chat route */
 app.post("/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
@@ -41,16 +48,12 @@ app.post("/chat", async (req, res) => {
       "No response from AI";
 
     res.json({ reply });
-
-  } catch (error) {
-    res.status(500).json({
-      error: "Something went wrong",
-      details: error.message
-    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "AI error" });
   }
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
+  console.log(`✅ Server running on port ${PORT}`);
 });
